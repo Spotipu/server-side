@@ -7,8 +7,8 @@ const app = express();
 const DB = process.env.DB || `mongodb://localhost/spotipu`;
 const port = process.env.PORT || 3000;
 const cors = require('cors');
-const router = require('./routes/indexRoutes');
-const errorHandling = require('./middleware/errorHandler');
+const router = require('./routes/index');
+const errorHandling = require('./middlewares/errorHandler');
 
 const mongoose = require('mongoose');
 mongoose.connect(DB, { useNewUrlParser: true, useFindAndModify: false }, function (err) {
