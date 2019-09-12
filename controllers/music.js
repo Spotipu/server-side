@@ -13,11 +13,10 @@ class MusicController {
             UserId: id
         }
         Music.create(newMusic)
-            .then(music => {
-                res.status(201).json(music);
-            })
-            .catch(next)
-
+        .then(music => {
+            res.status(201).json( music );
+        })
+        .catch(next)
     }
 
     static getMyMusic(req, res, next) {
@@ -43,11 +42,7 @@ class MusicController {
         })
             .populate('UserId')
             .then(music => {
-                if (music.length !== 0) {
-                    res.status(200).json(music);
-                } else {
-                    res.status(404).json({ message: 'You dont have any favorite' });
-                }
+                res.status(200).json(music);
             })
             .catch(next)
     }

@@ -44,7 +44,7 @@ const Multer = require('multer'),
             if ((path.extname(file.originalname) === '.mp3') || (path.extname(file.originalname) === '.wav') || (path.extname(file.originalname) === '.m4a') || (path.extname(file.originalname) === '.aac')) {
                 next(null, true);
             } else {
-                next(err);
+                next({ status : 400 , message : "Invalid Audio Type"});
             }
         },
         storage: Multer.MemoryStorage,
