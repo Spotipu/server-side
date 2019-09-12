@@ -44,7 +44,7 @@ Response :
 Success :
 {
     "status": 201,
-    "token": <TOKEN>
+    "createdUser": <user>
 }
 
 Error :
