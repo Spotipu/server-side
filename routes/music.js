@@ -1,8 +1,12 @@
-const express = require('express');
-const UserController = require('../controllers/user')
-const router = express.Router();
-router.post('/login' , UserController.login )
-router.post('/register' , UserController.register )
+const router = require('express').Router();
+const MusicController = require('../controllers/music');
+const authentication = require('../middlewares/authentication');
+const music = require('../helpers/music');
 
+router.use(authentication);
+router.post('/upload', music.multer.single('file'), music.sendUploadToGCS, MusicController.upload);
+router.get('/music', MusicController.getAllMusic);
+router.post('/mymusic', MusicController.getMyMusic);
+router.post('/favorite', MusicController.getMyFavorite);
 
-module.exports = router;
+module.exports = router;    
