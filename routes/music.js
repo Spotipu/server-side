@@ -5,8 +5,8 @@ const music = require('../helpers/music');
 
 router.use(authentication);
 router.post('/upload', music.multer.single('file'), music.sendUploadToGCS, MusicController.upload);
-router.get('/music', MusicController.getAllMusic);
-router.post('/mymusic', MusicController.getMyMusic);
-router.post('/favorite', MusicController.getMyFavorite);
+router.get('/', MusicController.getAllMusic);
+router.get('/mymusic', MusicController.getMyMusic);
+router.get('/favorite', MusicController.getMyFavorite);
 
 module.exports = router;    

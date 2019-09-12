@@ -3,11 +3,9 @@ const Music = require('../models/music');
 class MusicController {
 
     static upload(req, res, next) {
-        // console.log(req.file.response);
         const { url } = req.file
         const { title, artist } = req.body;
-        // const { id } = req.decode;
-        const id = `231237y621763123`
+        const { id } = req.decode;
         const newMusic = {
             title,
             artist,
@@ -16,10 +14,9 @@ class MusicController {
         }
         Music.create(newMusic)
         .then(music => {
-            res.status(201).json(200);
+            res.status(201).json( music );
         })
         .catch(next)
-
     }
 
     static getMyMusic(req, res, next) {
@@ -43,11 +40,7 @@ class MusicController {
             favorites: id
         })
             .then(music => {
-                if (music.length !== 0) {
-                    res.status(200).json(music);
-                } else {
-                    res.status(404).json({ message: 'You dont have any favorite' });
-                }
+                res.status(200).json(music);
             })
             .catch(next)
     }
