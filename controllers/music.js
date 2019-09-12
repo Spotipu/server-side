@@ -3,11 +3,9 @@ const Music = require('../models/music');
 class MusicController {
 
     static upload(req, res, next) {
-        // console.log(req.file.response);
         const { url } = req.file
         const { title, artist } = req.body;
-        // const { id } = req.decode;
-        const id = `231237y621763123`
+        const { id } = req.decode;
         const newMusic = {
             title,
             artist,
@@ -15,10 +13,10 @@ class MusicController {
             UserId: id
         }
         Music.create(newMusic)
-        .then(music => {
-            res.status(201).json(200);
-        })
-        .catch(next)
+            .then(music => {
+                res.status(201).json(music);
+            })
+            .catch(next)
 
     }
 
@@ -27,6 +25,7 @@ class MusicController {
         Music.find({
             UserId: id
         })
+            .populate('UserId')
             .then(music => {
                 if (music.length !== 0) {
                     res.status(200).json(music);
@@ -42,6 +41,7 @@ class MusicController {
         Music.find({
             favorites: id
         })
+            .populate('UserId')
             .then(music => {
                 if (music.length !== 0) {
                     res.status(200).json(music);
@@ -54,8 +54,60 @@ class MusicController {
 
     static getAllMusic(req, res, next) {
         Music.find()
+            .populate('UserId')
             .then(music => {
                 res.status(200).json(music);
+            })
+            .catch(next)
+    }
+
+    static addFavorite(req, res, next) {
+        const _id = req.params.id;
+        const { id } = req.decode;
+        Music.findByIdAndUpdate({
+            _id
+        }, {
+                $push: {
+                    favorites: id
+                }
+            }, {
+                new: true
+            })
+            .then(music => {
+                res.status(200).json({
+                    message: `Success added music to your favorite`
+                });
+            })
+            .catch(next)
+    }
+
+    static unFavorite(req, res, next) {
+        const _id = req.params.id;
+        const { id } = req.decode;
+        Music.findByIdAndUpdate({
+            _id
+        }, {
+                $pull: {
+                    favorites: id
+                }
+            }, {
+                new: true
+            })
+            .then(music => {
+                res.status(200).json({
+                    message: `Success delete music from your favorite`
+                });
+            })
+            .catch(next)
+    }
+
+    static delete(req, res, next) {
+        const _id = req.params.id;
+        Music.findByIdAndDelete({
+            _id
+        })
+            .then(() => {
+                res.status(200).json({ message: `Success delete music` });
             })
             .catch(next)
     }
