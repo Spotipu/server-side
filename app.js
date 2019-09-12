@@ -11,9 +11,9 @@ const router = require('./routes/index');
 const errorHandling = require('./middlewares/errorHandler');
 
 const mongoose = require('mongoose');
-mongoose.connect(DB, { useNewUrlParser: true, useFindAndModify: false }, function (err) {
+mongoose.connect(DB, { useNewUrlParser: true, useFindAndModify: false , useUnifiedTopology: true }, function (err) {
     if (!err) {
-        console.log(`connect mas eee`);
+        console.log(`connect to ${DB}`);
     } else {
         console.log(err);
     }
@@ -24,6 +24,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
 app.use('/', router);
+
 app.use(errorHandling);
 
 app.listen(port, function () {

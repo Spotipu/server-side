@@ -10,7 +10,7 @@ const userSchema = new mongoose.Schema({
                 return format.test(email);
             },
             message: function ( props ) { 
-                `Invalid email format`
+                return `Invalid email format`
             }
         }, 
         {
@@ -35,7 +35,8 @@ const userSchema = new mongoose.Schema({
         required: [true , "Password is required"]
     },
 },{
-    timestamps: true
+    timestamps: true,
+    versionKey: false
 });
 
 userSchema.pre('save' , function ( next ) {
